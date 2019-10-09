@@ -1,20 +1,21 @@
-var express = require('express'),
+var express = require("express"),
     app = express(),
-    bodyParser = require('body-parser'),
+    bodyParser = require("body-parser"),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    methodOverride = require("method-override");
-
+    LocalStrategy = require('passport-local').Strategy;
+    methodOverride = require('method-override')
 var db = require("./models"),
-    User = db.User;
+    User = db.User
 
 // Configure app
-app.set('views', __dirname + 'views');      // Views directory
+app.set("views", __dirname + '/views');    // Views directory
 app.use(express.static('public'));          // Static directory
 app.use(bodyParser.urlencoded({ extended: true })); // req.body
+app.set('view engine', 'ejs');
 app.use(methodOverride('X-HTTP-Method-Override'));
+// middleware for auth
 app.use(cookieParser());
 app.use(session({
   secret: 'supersecretkey', // change this!
@@ -24,25 +25,40 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//passport Config
+//Passport Configure
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Set CORS Headers
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
-
-
-
-// Homepage -- Display a list of current todos and a form
-app.get('/', function(req, res) {
-    res.sendFile( __dirname + '/views/index.html')
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
-app.listen(4000, function() {
-    console.log("Server running on port 4000...")
-})
+//ROUTES
+// app.get('/', function(req, res) {
+//  res.render("index", { user: req.user, });
+// });
+app.get('/signup', function(req, res) {
+ res.send("signup");
+});
+
+app.post('/signup', function (req, res) {
+  User.register(new User({ username: req.body.username }), req.body.password,
+    function (err, newUser) {
+      passport.authenticate('local')(req, res, function() {
+        res.send('signed up!!!');
+      });
+    }
+  );
+});
+
+
+
+
+
+app.listen(process.env.PORT || 5000, function () {
+  console.log('Example app listening at http://localhost:8000/');
+});
