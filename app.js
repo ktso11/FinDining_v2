@@ -13,6 +13,7 @@ var db = require("./models"),
 app.set("views", __dirname + '/views');    // Views directory
 app.use(express.static('public'));          // Static directory
 app.use(bodyParser.urlencoded({ extended: true })); // req.body
+// app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.use(methodOverride('X-HTTP-Method-Override'));
 // middleware for auth
@@ -37,12 +38,13 @@ app.use(function(req, res, next) {
     next();
 });
 
-//ROUTES
-// app.get('/', function(req, res) {
-//  res.render("index", { user: req.user, });
-// });
+// ROUTES
+app.get('/', function(req, res) {
+ res.render("index", { user: req.user, });
+});
+
 app.get('/signup', function(req, res) {
- res.send("signup");
+ res.render('signup');
 });
 
 app.post('/signup', function (req, res) {
@@ -59,6 +61,6 @@ app.post('/signup', function (req, res) {
 
 
 
-app.listen(process.env.PORT || 5000, function () {
-  console.log('Example app listening at http://localhost:8000/');
+app.listen(process.env.PORT || 3400, function () {
+  console.log('Example app listening at http://localhost:3400/');
 });
