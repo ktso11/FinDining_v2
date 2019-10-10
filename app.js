@@ -6,20 +6,20 @@ var express = require("express"),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
     methodOverride = require('method-override')
+
 var db = require("./models"),
     User = db.User
 
 // Configure app
-app.set("views", __dirname + '/views');    // Views directory
-app.use(express.static('public'));          // Static directory
-app.use(bodyParser.urlencoded({ extended: true })); // req.body
-// app.engine('html', require('ejs').renderFile);
+app.set("views", __dirname + '/views');
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(methodOverride('X-HTTP-Method-Override'));
-// middleware for auth
+
 app.use(cookieParser());
 app.use(session({
-  secret: 'supersecretkey', // change this!
+  secret: 'supersecretkey',
   resave: false,
   saveUninitialized: false
 }));
@@ -47,10 +47,23 @@ app.get('/signup', function(req, res) {
  res.render('signup');
 });
 
+app.get('/login', function (req, res) {
+ res.render('login');
+});
+
+app.post('/login', passport.authenticate('local'), function (req, res) {
+  console.log(req.user);
+  res.send('logged in!!!'); // sanity check
+  // res.redirect('/'); // preferred!
+});
+
 app.post('/signup', function (req, res) {
-  User.register(new User({ username: req.body.username }), req.body.password,
+  User.register(new User({
+    username: req.body.username }),
+    req.body.password,
     function (err, newUser) {
       passport.authenticate('local')(req, res, function() {
+        console.log(err);
         res.send('signed up!!!');
       });
     }
