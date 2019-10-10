@@ -51,11 +51,7 @@ app.get('/login', function (req, res) {
  res.render('login');
 });
 
-app.post('/login', passport.authenticate('local'), function (req, res) {
-  console.log(req.user);
-  res.send('logged in!!!'); // sanity check
-  // res.redirect('/'); // preferred!
-});
+
 
 app.post('/signup', function (req, res) {
   User.register(new User({
@@ -70,8 +66,17 @@ app.post('/signup', function (req, res) {
   );
 });
 
+app.post('/login', passport.authenticate('local'), function (req, res) {
+  console.log(req.user);
+  res.redirect('/');
+});
 
-
+app.get('/logout', function (req, res) {
+  console.log("BEFORE logout", JSON.stringify(req.user));
+  req.logout();
+  console.log("AFTER logout", JSON.stringify(req.user));
+  res.redirect('/');
+});
 
 
 app.listen(process.env.PORT || 3400, function () {
