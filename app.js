@@ -38,6 +38,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+
+
 // ROUTES
 app.get('/', function(req, res) {
  res.render("index", { user: req.user, });
@@ -55,7 +57,10 @@ app.get('/login', function (req, res) {
 
 app.post('/signup', function (req, res) {
   User.register(new User({
-    username: req.body.username }),
+    username: req.body.username,
+    truckname: req.body.truckname,
+    address: req.body.address,
+    foodtype: req.body.foodtype }),
     req.body.password,
     function (err, newUser) {
       passport.authenticate('local')(req, res, function() {

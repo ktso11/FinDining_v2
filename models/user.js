@@ -5,7 +5,11 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
       username: String,
       password: String,
-
+      truckname: String,
+      // long: String,
+      // lat: String,
+      address: String,
+      foodtype: String,
     });
 
 UserSchema.plugin(passportLocalMongoose);
