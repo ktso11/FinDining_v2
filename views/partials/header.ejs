@@ -1,0 +1,20 @@
+
+<header>
+  <p id="logo">Findining</p>
+  <% if(!user) { %>
+
+      <a href="/userlog">Planner</a>
+      <a href="/vendorlog">Artist</a>
+
+  <% } else { %>
+
+        <a href="/">Search</a>
+        a href="/profile">Profile</a>
+        <a href="/logout">Log out</a>
+        <input type="hidden" id="currentUser" value="<%= user._id %>">
+        Let foodies know where <%=user.truckname %> are stationed!
+        <div class="form-group">
+          <input type="text" name="address" class="form-control" placeholder="Address" autofocus>
+        </div>
+  <% } %>
+</header>

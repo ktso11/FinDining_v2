@@ -1,7 +1,7 @@
-<% if(!user) { %>
-  <a href="/login">Log in</a>
-  <a href="/signup">Sign up</a>
-<% } else { %>
-  <div>Welcome, <%= user.username %>!</div>
-  <a href="/logout">Log out</a>
-<% } %>
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../views/partials/head %>
+  <body>
+    <% include ../views/partials/header %>
+  </body>
+</html>

@@ -8,7 +8,7 @@ var UserSchema = new Schema({
       truckname: String,
       // long: String,
       // lat: String,
-      address: String,
+      // address: String,
       foodtype: String,
     });
 
