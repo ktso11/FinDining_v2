@@ -59,7 +59,7 @@ app.get('/logon', function (req, res) {
 
 app.post('/partials/login', passport.authenticate('local'), function (req, res) {
   console.log(req.user);
-  res.redirect('/profile/');
+  res.redirect('/profile/'+req.user.id);
 });
 
 
@@ -91,12 +91,12 @@ app.get('/logout', function (req, res) {
 });
 
 //Get all users
-app.get('/profile', function(req, res) {
+app.get('/profileAll', function(req, res) {
   User.find({}, function(err, allUsers) {
     if (err) {
       res.status(500).json({ error: err.message, });
     } else {
-      res.json({ posts: allUsers, });
+      res.json({ profile: allUsers, });
     }
   });
 });
@@ -106,49 +106,76 @@ app.get('/profile', function(req, res) {
 
 
 //Get one User
+
+
 app.get("/profile/:id", function(req, res) {
   User.findById(req.params.id, function (err, foundUser) {
     if (err) {
       res.status(500).json({ error: err.message, });
     } else {
-      res.render("profile/"+req.params.id, { user: foundUser, });
+      res.render("profile", { user: foundUser, });
     }
   });
 });
 
-
-app.get("/profile/:id", function(req, res) {
+app.get("api/profile/:id", function(req, res) {
   User.findById(req.params.id,function (err, foundUser) {
         if (err) {
           res.status(500).json({ error: err.message, });
         } else {
-          // console.log(foundUser);
-          // res.render("/profile", { user: foundUser});
-          console.log("this is req.params.id "+req.params.id)
-          console.log("this is req.user.id "+req.user.id)
           res.json(foundUser)
-
         }
       });
 });
 
 
 
-//ROUTE Update one user
-app.put("/profile/:id", function (req, res) {
+// API ROUTE - update post
+
+app.post("/profile/:id", function (req, res) {
+  // get post id from url params (`req.params`)
+  var userId = req.params.id;
+  // find post in db by id
+  User.findOne({ _id: userId, }, function (err, foundUser) {
+    if (err) {
+      res.status(500).json({ error: err.message, });
+    } else {
+      // update the posts's attributes
+      foundUser.truckname = req.body.truckname || foundUser.title;
+      foundUser.location = req.body.location|| foundUser.location;
+      foundUser.foodtype = req.body.foodtype || foundUser.foodtype;
+      // save updated post in db
+      foundUser.save(function (err, savedUser) {
+        if (err) {
+          res.status(500).json({ error: err.message, });
+        } else {
+          res.json(savedUser);
+        }
+      });
+    }
+  });
+});
+
+
+//ROUTE Update one user//NOTE FROM LAST NIGHT - STILL CANNOT PUT
+app.post("/profile/:id", function (req, res) {
   // get u id from url params (`req.params`)
   var userId = req.params.id;
   var currentUser = req.user;
-
+  console.log(req.body)
   // find user in db by id
   User.findOne({ _id: userId, }, function (err, foundUser) {
-    console.log(foundUser.user);
-    if (err || foundUser.user != currentUser.id) {
-      res.render('index', {error: "Unauthorized, please log in to post a post."});
+    console.log("finding current user ..." + foundUser.user);
+    if (err) {
+      console.log("ERRRRROR")
+      res.status(500).json({ error: err.message, });
+      // if (err || foundUser.user != currentUser.id) {
+    //   res.render('index', {error: "Unauthorized, please log in to post a post."});
     } else {
       // update the user attributes
-      foundUser.truckname = req.body.truckname
-
+      foundUser.truckname = req.body.truckname || foundUser.title;
+      foundUser.location = req.body.location|| foundUser.location;
+      foundUser.foodtype = req.body.foodtype || foundUser.foodtype;
       // save updated user attr in db
       foundUser.save(function (err, savedUser) {
         if (err) {
@@ -161,33 +188,6 @@ app.put("/profile/:id", function (req, res) {
   });
 });
 
-// API ROUTE - update post
-
-
-
-app.put("/profiles/:id", function (req, res) {
-  // get post id from url params (`req.params`)
-  var userId = req.params.id;
-
-  // find post in db by id
-  User.findOne({ _id: postId, }, function (err, foundUser) {
-    if (err) {
-      res.status(500).json({ error: err.message, });
-    } else {
-      // update the posts's attributes
-      foundUser.truckname = req.body.truckname
-
-      // save updated post in db
-      foundUser.save(function (err, savedUser) {
-        if (err) {
-          res.status(500).json({ error: err.message, });
-        } else {
-          res.json(savedUser);
-        }
-      });
-    }
-  });
-});
 
 
 
