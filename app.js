@@ -61,6 +61,9 @@ app.post('/partials/login', passport.authenticate('local'), function (req, res) 
   console.log(req.user);
   res.redirect('/profile/'+req.user.id);
 });
+app.get('/map', function (req, res) {
+  res.render('map', { user: req.user, });
+});
 
 
 app.post('/partials/signup', function (req, res) {
