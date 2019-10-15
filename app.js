@@ -101,8 +101,23 @@ app.get('/profile', function(req, res) {
   });
 });
 
+
+
+
+
 //Get one User
-app.get("/api/profile/:id", function(req, res) {
+app.get("/profile/:id", function(req, res) {
+  User.findById(req.params.id, function (err, foundUser) {
+    if (err) {
+      res.status(500).json({ error: err.message, });
+    } else {
+      res.render("profile/"+req.params.id, { user: foundUser, });
+    }
+  });
+});
+
+
+app.get("/profile/:id", function(req, res) {
   User.findById(req.params.id,function (err, foundUser) {
         if (err) {
           res.status(500).json({ error: err.message, });
@@ -110,7 +125,7 @@ app.get("/api/profile/:id", function(req, res) {
           // console.log(foundUser);
           // res.render("/profile", { user: foundUser});
           console.log("this is req.params.id "+req.params.id)
-          console.log("this is req.user "+req.user.id)
+          console.log("this is req.user.id "+req.user.id)
           res.json(foundUser)
 
         }
@@ -147,19 +162,10 @@ app.put("/profile/:id", function (req, res) {
 });
 
 // API ROUTE - update post
-app.get("/api/profiles", function (req, res) {
-  // find all posts in db
-  User.find(function (err, allUsers) {
-    if (err) {
-      res.status(500).json({ error: err.message, });
-    } else {
-      res.json({ posts: allUsers, });
-    }
-  });
-});
 
 
-app.put("/api/profiles/:id", function (req, res) {
+
+app.put("/profiles/:id", function (req, res) {
   // get post id from url params (`req.params`)
   var userId = req.params.id;
 
