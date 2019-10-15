@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../views/partials/head %>
+  <body>
+    <% include ../views/partials/header %>
+
+
+
+
+    Update your information!
+    <span id="currentUser"><%= user._id %></span>
+    <span id="currentUser"><%= user.truckname %></span>
+    <span id="currentUser"><%= user.location %></span>
+
+  <form method="POST" action="/profile/<%=user._id %>">
+    <div class="form-group">
+      <span>Enter truck name </span>
+      <input type="text" name="truckname" class="form-control" value="<%= user.truckname %>" >
+    </div>
+
+    <input type="submit" class="btn btn-block btn-default" value="Update">
+  </form>
+
+
+  </body>
+</html>

@@ -45,17 +45,25 @@ app.get('/', function(req, res) {
  res.render("index", { user: req.user, });
 });
 
-app.get('/signup', function(req, res) {
- res.render('signup');
+// app.get('/partials/signup', function(req, res) {
+//  res.render("signup");
+// });
+//
+app.get('/profile', function(req, res) {
+ res.render('profile', { user: req.user, });
+});
+//
+app.get('/logon', function (req, res) {
+ res.render('logon', { user: req.user, });
 });
 
-app.get('/login', function (req, res) {
- res.render('login');
+app.post('/partials/login', passport.authenticate('local'), function (req, res) {
+  console.log(req.user);
+  res.redirect('/profile/');
 });
 
 
-
-app.post('/signup', function (req, res) {
+app.post('/partials/signup', function (req, res) {
   User.register(new User({
     username: req.body.username,
     truckname: req.body.truckname,
@@ -65,23 +73,119 @@ app.post('/signup', function (req, res) {
     function (err, newUser) {
       passport.authenticate('local')(req, res, function() {
         console.log(err);
-        res.send('signed up!!!');
+        res.redirect('/profile');
+
       });
     }
   );
 });
 
-app.post('/login', passport.authenticate('local'), function (req, res) {
-  console.log(req.user);
-  res.redirect('/');
-});
+
 
 app.get('/logout', function (req, res) {
   console.log("BEFORE logout", JSON.stringify(req.user));
   req.logout();
   console.log("AFTER logout", JSON.stringify(req.user));
   res.redirect('/');
+  // res.send('logged out!!!');
 });
+
+//Get all users
+app.get('/profile', function(req, res) {
+  User.find({}, function(err, allUsers) {
+    if (err) {
+      res.status(500).json({ error: err.message, });
+    } else {
+      res.json({ posts: allUsers, });
+    }
+  });
+});
+
+//Get one User
+app.get("/api/profile/:id", function(req, res) {
+  User.findById(req.params.id,function (err, foundUser) {
+        if (err) {
+          res.status(500).json({ error: err.message, });
+        } else {
+          // console.log(foundUser);
+          // res.render("/profile", { user: foundUser});
+          console.log("this is req.params.id "+req.params.id)
+          console.log("this is req.user "+req.user.id)
+          res.json(foundUser)
+
+        }
+      });
+});
+
+
+
+//ROUTE Update one user
+app.put("/profile/:id", function (req, res) {
+  // get u id from url params (`req.params`)
+  var userId = req.params.id;
+  var currentUser = req.user;
+
+  // find user in db by id
+  User.findOne({ _id: userId, }, function (err, foundUser) {
+    console.log(foundUser.user);
+    if (err || foundUser.user != currentUser.id) {
+      res.render('index', {error: "Unauthorized, please log in to post a post."});
+    } else {
+      // update the user attributes
+      foundUser.truckname = req.body.truckname
+
+      // save updated user attr in db
+      foundUser.save(function (err, savedUser) {
+        if (err) {
+          res.status(500).json({ error: err.message, });
+        } else {
+          res.redirect("/profile/" + savedUser._id);
+        }
+      });
+    }
+  });
+});
+
+// API ROUTE - update post
+app.get("/api/profiles", function (req, res) {
+  // find all posts in db
+  User.find(function (err, allUsers) {
+    if (err) {
+      res.status(500).json({ error: err.message, });
+    } else {
+      res.json({ posts: allUsers, });
+    }
+  });
+});
+
+
+app.put("/api/profiles/:id", function (req, res) {
+  // get post id from url params (`req.params`)
+  var userId = req.params.id;
+
+  // find post in db by id
+  User.findOne({ _id: postId, }, function (err, foundUser) {
+    if (err) {
+      res.status(500).json({ error: err.message, });
+    } else {
+      // update the posts's attributes
+      foundUser.truckname = req.body.truckname
+
+      // save updated post in db
+      foundUser.save(function (err, savedUser) {
+        if (err) {
+          res.status(500).json({ error: err.message, });
+        } else {
+          res.json(savedUser);
+        }
+      });
+    }
+  });
+});
+
+
+
+
 
 
 app.listen(process.env.PORT || 3400, function () {

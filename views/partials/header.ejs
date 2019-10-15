@@ -1,20 +1,39 @@
+<% if(!user) { %>
+  <nav class="navbar navbar-expand-md">
+    <a class="navbar-brand" href="#"><b>Findining</b></a>
+    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#main-navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="main-navigation">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/logon">Sign up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logon">Log in</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-<header>
-  <p id="logo">Findining</p>
-  <% if(!user) { %>
-
-      <a href="/userlog">Planner</a>
-      <a href="/vendorlog">Artist</a>
-
-  <% } else { %>
-
-        <a href="/">Search</a>
-        a href="/profile">Profile</a>
-        <a href="/logout">Log out</a>
-        <input type="hidden" id="currentUser" value="<%= user._id %>">
-        Let foodies know where <%=user.truckname %> are stationed!
-        <div class="form-group">
-          <input type="text" name="address" class="form-control" placeholder="Address" autofocus>
-        </div>
-  <% } %>
-</header>
+<% } else { %>
+  <nav class="navbar navbar-expand-md">
+    <a class="navbar-brand" href="#"><b>Findining</b></a>
+    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#main-navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="main-navigation">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Log out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<% } %>

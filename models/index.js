@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/findining", {useMongoClient: true, });
+mongoose.connect("mongodb://localhost:27017/findinings", {useMongoClient: true, });
 mongoose.Promise = global.Promise;
 
 
