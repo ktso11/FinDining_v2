@@ -104,6 +104,16 @@ app.get('/profileAll', function(req, res) {
   });
 });
 
+app.get("/api/profileLocations", function(req, res) {
+  User.find({location: { $exists: true }}, function(err, allUsers) {
+    if (err) {
+      res.status(500).json({ error: err.message, });
+    } else {
+      res.json({ profile: allUsers, });
+    }
+  });
+});
+
 
 
 
@@ -121,15 +131,7 @@ app.get("/profile/:id", function(req, res) {
   });
 });
 
-app.get("api/profile/:id", function(req, res) {
-  User.findById(req.params.id,function (err, foundUser) {
-        if (err) {
-          res.status(500).json({ error: err.message, });
-        } else {
-          res.json(foundUser)
-        }
-      });
-});
+
 
 
 
