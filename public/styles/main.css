@@ -1,10 +1,17 @@
 
+:root {
+  --brand-orange: #F07C14;
+  --default-font: Helvetica;
+  --medium-size-font: 16px;
+}
+
+body {
+  font-family: var(--default-font);
+  font-size: var(--medium-size-font)
+}
 
 navbar-brand{
-  font-family: Shrikhand;
-  font-size: 32px;
   background: #F07C14;
-
 }
 
 .navbar {
@@ -14,7 +21,6 @@ navbar-brand{
 
 .nav-link,
 .navbar-brand, footer a {
-  font-family: Helvetica;
   letter-spacing: 0.1em;
   /* color: #4F4F4F; */
 }
@@ -23,12 +29,15 @@ navbar-brand{
   margin-left: .5em;
   margin-top: .5em;
 }
+
 .nav-link {
   margin-right: 1em !important;
 }
+
 .nav-link:hover {
   color: #BDBDBD;
 }
+
 .navbar-collapse {
   justify-content: flex-end;
 }
