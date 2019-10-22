@@ -10,7 +10,9 @@
   --x-large-margin: 4em 4em;
   --white-color: #fff;
   --grey-color: #c4c4c4;
+  --light-grey-color: #E0E0E0;
   --black-color: #4F4F4F;
+  --default-link-color: #08767D;
 
 }
 
@@ -20,14 +22,11 @@ body {
   color: var(--black-color);
 }
 
-h2 {
-  font-size: 1.5em;
-  text-align: center;
-  margin-bottom: 2em;
+a {
+  color: var(--default-link-color);
 }
-
-navbar-brand{
-  background: #F07C14;
+a:hover {
+  color: var(--grey-color);
 }
 
 .navbar {
@@ -47,10 +46,6 @@ navbar-brand{
 
 .nav-link {
   margin-right: 1em !important;
-}
-
-.nav-link:hover {
-  color: #BDBDBD;
 }
 
 .navbar-collapse {
@@ -80,7 +75,7 @@ navbar-brand{
   border: 1px solid var(--brand-orange);
 }
 
-.search-button {
+.search-button, button {
   width: 15em;
   color: var(--white-color);
   background-color: var(--brand-orange);
@@ -97,6 +92,13 @@ navbar-brand{
 .findining-info {
   background-color: var(--brand-light-orange);
   padding: var(--x-large-margin);
+}
+
+.whatis-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2em;
 }
 
 .findining-info-row {
@@ -117,4 +119,13 @@ navbar-brand{
 
 .findining-info-content {
   width: 20em;
+}
+
+/* Footer */
+footer {
+  padding: var(--large-margin);
+  bottom: 0;
+  text-align: center;
+  background-color: var(--light-grey-color);
+
 }
