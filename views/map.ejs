@@ -3,6 +3,11 @@
   <% include ../views/partials/head %>
   <body>
     <% include ../views/partials/header %>
-    <div id="googleMap" style="width:100%;height:400px;"></div>
+    <% include ../views/partials/googlemap %>
+<form>
+    <input class="search-input" name="address" id="#address" placeholder="San Francisco CA 94107" type="text"></input>
+    <button class="search-button">Find my next meal</button>
+</form>
+
   </body>
 </html>
