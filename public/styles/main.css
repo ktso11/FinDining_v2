@@ -29,9 +29,18 @@ a:hover {
   color: var(--grey-color);
 }
 
+h4 {
+  font-size: var(--medium-size-font);
+  font-weight: 800;
+  margin-top: 1em;
+}
+
+.hidden {
+  display: none;
+}
+
 .navbar {
   letter-spacing: 0.04em;
-  /* font-color: #4F4F4F; */
 }
 
 .nav-link,
@@ -63,7 +72,6 @@ a:hover {
 
 .search-input {
   width: 100%;
-  margin-bottom: 1em;
   padding: var(--small-margin);
   padding-left: 1em;
   border-radius: 2em;
@@ -72,10 +80,10 @@ a:hover {
 }
 
 .search-input:focus {
-  border: 1px solid var(--brand-orange);
+  border: .0625em solid var(--brand-orange);
 }
 
-.search-button, button {
+.search-button, .landing-cta {
   width: 15em;
   color: var(--white-color);
   background-color: var(--brand-orange);
@@ -85,6 +93,10 @@ a:hover {
   border-radius: 2em;
   outline: none;
   letter-spacing: 0.08em;
+}
+
+.search-button {
+  margin: 0 auto;
 }
 
 /* Information Section */
@@ -131,10 +143,43 @@ footer {
 
 /* Google Map */
 .truck-container {
-  width: 30em;
+  width: 100%;
   border: 0.0625em solid var(--grey-color);
-  border-radius: 1em;
+  border-radius: .5em;
   padding: var(--medium-margin);
   margin: var(--medium-margin);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
 
+.full-list-container {
+  margin: 0 auto;
+}
+
+.full-list-side {
+  padding: var(--medium-margin);
+}
+
+.truck-container:hover {
+  border: .2em solid var(--brand-orange);
+  cursor: pointer;
+};
+
+#hide{
+  /* display: 0; */
+
+}
+/* Map - Form section */
+.map-form {
+  margin: var(--medium-margin);
+}
+
+.form-ele {
+  margin:var(--small-margin);
+}
+
+li {
+  list-style-type: none;
 }

@@ -5,32 +5,52 @@ $(document).ready(function(){
   var geocoder;
   var map;
   var trucklist = []
+  var truckListUI = $("#trucks");
+  var moreInfo = $("#hide");
 
+  truckListUI.hide();
   googleMap.hide();
+  moreInfo.hide();
+
+
 
   $.ajax({
-        method: 'GET',
-        url: '/api/profileLocations',
-        success: function(alltrucks){
-          initMap(alltrucks);
-
-          for(j = 0; j < alltrucks.profile.length; j++){
-          var alltruck = alltrucks.profile[j];
-          $("#trucks").append(
-            `<div class='truck-container ${alltruck.truckname}'>
+      method: 'GET',
+      url: '/api/profileLocations',
+      success: function(alltrucks){
+        initMap(alltrucks);
+        for(j = 0; j < alltrucks.profile.length; j++){
+        var alltruck = alltrucks.profile[j];
+        $("#trucks").append(
+          `<div class="truck-container" id='${alltruck._id}' href='${alltruck.location}'>
+            <div>
+              <img class="truck-img text-center" src="https://ktso11.github.io/FinDining_v2/public/assets/truck-1.png">
+            </div>
+            <div>
               <ul>
-              <li> <b>Name: </b> ${alltruck.truckname} </li>
-              <li> <b>Type: </b> ${alltruck.foodtype} </li>
-              <li> <b>Address: </b> ${alltruck.location} </li>
+                <li id="truck-name"> <b>Name: </b> ${alltruck.truckname} </li>
+                <li id="truck-type"> <b>Type: </b> ${alltruck.foodtype} </li>
+                <li id="truck-address"> ${alltruck.location} </li>
               </ul>
-            </div>`);
-          }
+            </div>
+          </div>`);
+        }
+
+        $('.truck-container').on('click', function(){
+          var selectedTruck = $(this).clone()
+          moreInfo.show();
+          $('input[name=address]').val($(this).attr('href'))
+          $('#selected-truck').html(selectedTruck)
+          $(selectedTruck).css("border", ".2em solid var(--brand-orange)")
+          getInput();
+
+        })
       }
     })
 
     function initMap(alltrucks) {
       map = new google.maps.Map(document.getElementById('googleMap'), {
-        zoom: 12,
+        zoom: 15,
         center: {lat: 37.77, lng: -122.44}
       });
 
@@ -54,19 +74,25 @@ $(document).ready(function(){
               position: results[0].geometry.location,
               map: map,
               id: trucks._id,
-              html: '<div id="markerWindow">'+
+              html: '<div class="markerWindow">'+
                       '<div id="siteNotice">'+
                       '</div>'+
                       '<h2>'+trucks.truckname +'</h2>'+
                       '<div id="bodyContent">'+
-                      '<p>'+ trucks.foodtype +'</p>'+
+                      '<p>'+ trucks.location +'</p>'+
                       '</div>'+
                       '</div>'
           });
           google.maps.event.addListener(marker, "click", function () {
               infowindow.setContent(this.html);
               infowindow.open(map, this);
-              console.log(this.id)
+              moreInfo.show();
+              var id = this.id
+              var clickedTruck = $('#'+id).clone()
+              $('#selected-truck').html(clickedTruck)
+              clickedTruck.css("border", ".2em solid var(--brand-orange)")
+
+
           });
           // marker.addListener('mouseover', function() {
           //
@@ -103,6 +129,9 @@ $(document).ready(function(){
       })
     }
 
+    $('.listLink').on('click', function(){
+      truckListUI.show()
+    })
 
 
 

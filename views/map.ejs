@@ -3,14 +3,36 @@
   <% include ../views/partials/head %>
   <body>
     <% include ../views/partials/header %>
-    <% include ../views/partials/googlemap %>
-    <form>
-      <input class="search-input" name="address" id="#address" placeholder="San Francisco CA 94107" type="text"></input>
-      <button class="search-button">Find my next meal</button>
-    </form>
-
-    <section id="trucks">
+    <section class="form-container">
+      <form class="map-form row">
+        <div class="col-lg-8 ">
+          <input class="search-input form-ele" name="address" id="#address" placeholder="San Francisco CA 94107" type="text"></input>
+        </div>
+        <div class="col-lg-4 ">
+          <button class="search-button form-ele">Find my next meal</button>
+        </div>
+      </form>
     </section>
+    <% include ../views/partials/googlemap %>
+
+    <div class="full-list-container container">
+      <div class="row">
+
+        <div class="col-lg-6 full-list-side">
+          <a href="#">
+            <h4 class="d-flex listLink justify-content-center">See full list of food trucks</h4>
+          </a>
+          <div id="trucks">
+          </div>
+        </div>
+        <div id="hide"  class="col-lg-6 full-list-side">
+          <h4 class="d-flex justify-content-center">You are looking at</h4>
+          <div id="selected-truck"></div>
+        </div>
+
+
+      </div>
+    </div>
 
   </body>
 </html>
