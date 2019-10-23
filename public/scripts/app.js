@@ -4,6 +4,7 @@ $(document).ready(function(){
   var infowindow = null;
   var geocoder;
   var map;
+  var trucklist = []
 
   googleMap.hide();
 
@@ -12,9 +13,20 @@ $(document).ready(function(){
         url: '/api/profileLocations',
         success: function(alltrucks){
           initMap(alltrucks);
+
+          for(j = 0; j < alltrucks.profile.length; j++){
+          var alltruck = alltrucks.profile[j];
+          $("#trucks").append(
+            `<div class='truck-container ${alltruck.truckname}'>
+              <ul>
+              <li> <b>Name: </b> ${alltruck.truckname} </li>
+              <li> <b>Type: </b> ${alltruck.foodtype} </li>
+              <li> <b>Address: </b> ${alltruck.location} </li>
+              </ul>
+            </div>`);
+          }
       }
     })
-
 
     function initMap(alltrucks) {
       map = new google.maps.Map(document.getElementById('googleMap'), {
@@ -41,6 +53,7 @@ $(document).ready(function(){
           var marker = new google.maps.Marker({
               position: results[0].geometry.location,
               map: map,
+              id: trucks._id,
               html: '<div id="markerWindow">'+
                       '<div id="siteNotice">'+
                       '</div>'+
@@ -53,21 +66,16 @@ $(document).ready(function(){
           google.maps.event.addListener(marker, "click", function () {
               infowindow.setContent(this.html);
               infowindow.open(map, this);
+              console.log(this.id)
           });
-          marker.addListener('mouseover', function() {
-              console.log("see this?")
-          });
-
-      }
-      else {
+          // marker.addListener('mouseover', function() {
+          //
+          // });
+      } else {
           alert("Geocode was not successful for the following reason: " + status);
             }
         });
       }
-
-    $('#markerWindow').mouseover(function() {
-          console.log("can you detect this?")
-      });
 
     $('.search-button').on('click', function(e){
       e.preventDefault();

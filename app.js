@@ -115,12 +115,7 @@ app.get("/api/profileLocations", function(req, res) {
 });
 
 
-
-
-
 //Get one User
-
-
 app.get("/profile/:id", function(req, res) {
   User.findById(req.params.id, function (err, foundUser) {
     if (err) {
@@ -162,7 +157,7 @@ app.post("/profile/:id", function (req, res) {
 });
 
 
-//ROUTE Update one user//NOTE FROM LAST NIGHT - STILL CANNOT PUT
+//ROUTE Update one user//
 app.post("/profile/:id", function (req, res) {
   // get u id from url params (`req.params`)
   var userId = req.params.id;

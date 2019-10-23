@@ -130,6 +130,11 @@ footer {
 }
 
 /* Google Map */
-#markerWindow {
-  background-color: red;
+.truck-container {
+  width: 30em;
+  border: 0.0625em solid var(--grey-color);
+  border-radius: 1em;
+  padding: var(--medium-margin);
+  margin: var(--medium-margin);
+
 }
