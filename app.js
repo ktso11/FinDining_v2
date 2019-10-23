@@ -45,20 +45,15 @@ app.get('/', function(req, res) {
  res.render("index", { user: req.user, });
 });
 
-// app.get('/partials/signup', function(req, res) {
-//  res.render("signup");
-// });
-//
 app.get('/profile', function(req, res) {
  res.render('profile', { user: req.user, });
 });
-//
+
 app.get('/logon', function (req, res) {
  res.render('logon', { user: req.user, });
 });
 
 app.post('/partials/login', passport.authenticate('local'), function (req, res) {
-  console.log(req.user);
   res.redirect('/profile/'+req.user.id);
 });
 app.get('/map', function (req, res) {
@@ -83,15 +78,14 @@ app.post('/partials/signup', function (req, res) {
   );
 });
 
-
-
 app.get('/logout', function (req, res) {
   console.log("BEFORE logout", JSON.stringify(req.user));
   req.logout();
   console.log("AFTER logout", JSON.stringify(req.user));
   res.redirect('/');
-  // res.send('logged out!!!');
 });
+
+
 
 //Get all users
 app.get('/profileAll', function(req, res) {
@@ -127,9 +121,6 @@ app.get("/profile/:id", function(req, res) {
 });
 
 
-
-
-
 // API ROUTE - update post
 
 app.post("/profile/:id", function (req, res) {
@@ -149,44 +140,15 @@ app.post("/profile/:id", function (req, res) {
         if (err) {
           res.status(500).json({ error: err.message, });
         } else {
-          res.json(savedUser);
-        }
-      });
-    }
-  });
-});
-
-
-//ROUTE Update one user//
-app.post("/profile/:id", function (req, res) {
-  // get u id from url params (`req.params`)
-  var userId = req.params.id;
-  var currentUser = req.user;
-  console.log(req.body)
-  // find user in db by id
-  User.findOne({ _id: userId, }, function (err, foundUser) {
-    console.log("finding current user ..." + foundUser.user);
-    if (err) {
-      console.log("ERRRRROR")
-      res.status(500).json({ error: err.message, });
-      // if (err || foundUser.user != currentUser.id) {
-    //   res.render('index', {error: "Unauthorized, please log in to post a post."});
-    } else {
-      // update the user attributes
-      foundUser.truckname = req.body.truckname || foundUser.title;
-      foundUser.location = req.body.location|| foundUser.location;
-      foundUser.foodtype = req.body.foodtype || foundUser.foodtype;
-      // save updated user attr in db
-      foundUser.save(function (err, savedUser) {
-        if (err) {
-          res.status(500).json({ error: err.message, });
-        } else {
+          // res.json(savedUser);
           res.redirect("/profile/" + savedUser._id);
         }
       });
     }
   });
 });
+
+
 
 
 

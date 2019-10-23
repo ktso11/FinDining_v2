@@ -3,8 +3,18 @@
 <% include ../views/partials/head %>
   <body>
     <% include ../views/partials/header %>
-    <% include ../views/partials/login %>
-    <% include ../views/partials/signup %>
+
+    <section class="container login-form">
+      <div class="row">
+        <div class="col-lg-6 login-signup">
+          <% include ../views/partials/signup %>
+        </div>
+        <div class="col-lg-6 login-signup">
+          <% include ../views/partials/login %>
+        </div>
+      </div>
+
+    </section>
     <% include ../views/partials/footer %>
   </body>
 </html>

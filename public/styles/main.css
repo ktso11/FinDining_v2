@@ -15,11 +15,16 @@
   --default-link-color: #08767D;
 
 }
+html {
+  position: relative;
+  min-height: 100%;
+}
 
 body {
   font-family: var(--default-font);
   font-size: var(--medium-size-font);
   color: var(--black-color);
+  margin-bottom: 5.5em;
 }
 
 a {
@@ -83,7 +88,7 @@ h4 {
   border: .0625em solid var(--brand-orange);
 }
 
-.search-button, .landing-cta {
+.search-button, .landing-cta, .login-btn{
   width: 15em;
   color: var(--white-color);
   background-color: var(--brand-orange);
@@ -97,6 +102,32 @@ h4 {
 
 .search-button {
   margin: 0 auto;
+}
+
+/* Login/Sign up */
+
+.login-form {
+  margin-top: 3em;
+}
+
+.login-signup {
+  padding: var(--medium-margin);
+}
+
+/* Profile */
+
+.profile-form {
+  /* margin: var(--large-margin); */
+  margin: 0 auto;
+  width: 60%;
+}
+
+.profile-form h4 {
+  margin-bottom: 2em;
+}
+
+.update-btn {
+  float: right;
 }
 
 /* Information Section */
@@ -139,6 +170,13 @@ footer {
   bottom: 0;
   text-align: center;
   background-color: var(--light-grey-color);
+  /* background-color: orange; */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+    /* height: 100px; */
 }
 
 /* Google Map */
@@ -154,6 +192,10 @@ footer {
   align-items: flex-start;
 }
 
+.markerWindow{
+  padding: var(--medium-margin);
+}
+
 .full-list-container {
   margin: 0 auto;
 }
@@ -167,11 +209,8 @@ footer {
   cursor: pointer;
 };
 
-#hide{
-  /* display: 0; */
-
-}
 /* Map - Form section */
+
 .map-form {
   margin: var(--medium-margin);
 }

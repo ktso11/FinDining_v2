@@ -50,7 +50,7 @@ $(document).ready(function(){
 
     function initMap(alltrucks) {
       map = new google.maps.Map(document.getElementById('googleMap'), {
-        zoom: 15,
+        zoom: 12,
         center: {lat: 37.77, lng: -122.44}
       });
 
@@ -123,6 +123,8 @@ $(document).ready(function(){
         if (status == google.maps.GeocoderStatus.OK) {
           searchInput = results[0].geometry.location;
           map.setCenter(searchInput);
+          map.setZoom(18);
+
         } else {
           console.log("cannot geocode this string")
         }
