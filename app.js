@@ -5,7 +5,8 @@ var express = require("express"),
     session = require('express-session'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
-    methodOverride = require('method-override')
+    methodOverride = require('method-override'),
+    port = process.env.PORT || 3400;
 
 var db = require("./models"),
     User = db.User
@@ -150,12 +151,6 @@ app.post("/profile/:id", function (req, res) {
 
 
 
-
-
-
-
-
-
-app.listen(process.env.PORT || 3400, function () {
-  console.log('Example app listening at http://localhost:3400/');
+app.listen(port, function () {
+  console.log('Listening on ' + port);
 });
