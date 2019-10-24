@@ -1,4 +1,5 @@
 Work in progress.
+URL: https://findining.herokuapp.com/
 
 Rebuilding v2 of Food Truck finding app, Findining.
 Version 1: https://github.com/ktso11/project1-findining
@@ -10,11 +11,13 @@ To run on localhost:
 - go to http://localhost:3400
 
 
-Updates 10/12 - 10/16
+Updates 10/12 - 10/23
 - set up user model
 - auth with passport is up
 - created routes and api
 - Create and edit Users is complete
 - google map with geocode and infoWindow complete
 - views are working with ejs
-- Next: transition to Angular and more styling to come
+- truck list added to map views
+- truck list is interactive with map
+- Next: transition to Angular, flash messages and more styling to come
