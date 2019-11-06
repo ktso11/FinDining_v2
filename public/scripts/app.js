@@ -18,6 +18,7 @@ $(document).ready(function(){
       method: 'GET',
       url: '/api/profileLocations',
       success: function(alltrucks){
+        //init google map
         initMap(alltrucks);
         for(j = 0; j < alltrucks.profile.length; j++){
         var alltruck = alltrucks.profile[j];
@@ -39,28 +40,34 @@ $(document).ready(function(){
         $('.truck-container').on('click', function(){
           var selectedTruck = $(this).clone()
           moreInfo.show();
+          //location string is stored in href attr, insert this val into the search bar
           $('input[name=address]').val($(this).attr('href'))
+          //show which truck is currently being shown
           $('#selected-truck').html(selectedTruck)
           $(selectedTruck).css("border", ".2em solid var(--brand-orange)")
+          // run geocode to show on map
           getInput();
 
         })
       }
     })
 
+
     function initMap(alltrucks) {
       map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 12,
         center: {lat: 37.77, lng: -122.44}
       });
+      //init setmark
+      setMark(map, alltrucks);
 
-      setMarkers(map, alltrucks);
       infowindow = new google.maps.InfoWindow({
         content: "loading"
       });
     }
 
-    function setMarkers(map, trucks){
+    // loop the truck arr to geocode each individually
+    function setMark(map, trucks){
       for(i=0; i<trucks.profile.length; i++){
         setMarker(map, trucks.profile[i])
       }
@@ -83,6 +90,7 @@ $(document).ready(function(){
                       '</div>'+
                       '</div>'
           });
+
           google.maps.event.addListener(marker, "click", function () {
               infowindow.setContent(this.html);
               infowindow.open(map, this);
@@ -91,12 +99,8 @@ $(document).ready(function(){
               var clickedTruck = $('#'+id).clone()
               $('#selected-truck').html(clickedTruck)
               clickedTruck.css("border", ".2em solid var(--brand-orange)")
-
-
           });
-          // marker.addListener('mouseover', function() {
-          //
-          // });
+
       } else {
           alert("Geocode was not successful for the following reason: " + status);
             }
@@ -108,12 +112,14 @@ $(document).ready(function(){
       getInput();
     });
 
+    //if click enter, run get input
     $('.search-input').keypress(function() {
       if(key == 13){
         getInput();
       }
-    });
+    })
 
+    //geocode the string from seach bar
     function getInput(){
       var searchAddress = $('input[name=address]').val();
       console.log("success: " + searchAddress)
@@ -129,13 +135,11 @@ $(document).ready(function(){
           console.log("cannot geocode this string")
         }
       })
-    }
+    };
 
     $('.listLink').on('click', function(){
       truckListUI.show()
-    })
+    });
 
 
-
-
-})
+});

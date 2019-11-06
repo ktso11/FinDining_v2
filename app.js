@@ -1,4 +1,4 @@
-var express = require("express"),
+const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     cookieParser = require('cookie-parser'),
@@ -7,8 +7,7 @@ var express = require("express"),
     LocalStrategy = require('passport-local').Strategy;
     methodOverride = require('method-override')
 
-
-var db = require("./models"),
+const db = require("./models"),
     User = db.User
 
 // Configure app
@@ -109,7 +108,6 @@ app.get("/api/profileLocations", function(req, res) {
   });
 });
 
-
 //Get one User
 app.get("/profile/:id", function(req, res) {
   User.findById(req.params.id, function (err, foundUser) {
@@ -121,9 +119,7 @@ app.get("/profile/:id", function(req, res) {
   });
 });
 
-
 // API ROUTE - update post
-
 app.post("/profile/:id", function (req, res) {
   // get post id from url params (`req.params`)
   var userId = req.params.id;
@@ -141,7 +137,6 @@ app.post("/profile/:id", function (req, res) {
         if (err) {
           res.status(500).json({ error: err.message, });
         } else {
-          // res.json(savedUser);
           res.redirect("/profile/" + savedUser._id);
         }
       });

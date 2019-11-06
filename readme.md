@@ -11,7 +11,7 @@ or Run on localhost:
 - run mongod
 - go to http://localhost:3400
 
-## Old Version
+## Version
 Findining was originally a group project built on RoR. You can find the old version here: https://github.com/ktso11/project1-findining
 
 
@@ -28,7 +28,9 @@ Findining was originally a group project built on RoR. You can find the old vers
 ## Next Step:
 - Angular for frontend
 - Incorporate flash messages
-- More styling to come
+- User can delete
+- get current location
+- get direction to truck
 
 ## Audience:
 finDining is the go-to app for anyone looking to see where the local food trucks are. To find food trucks, simply click on the CTA presented on the landing page, a interactive Google map will be there to show users where trucks are located.
@@ -40,7 +42,7 @@ User: username, truck name, location, food type
 
 ## Tech
 - HTML5, CSS, Javascript, JQuery, Bootstrap (for responsive design), Nodejs, Express, MongoDB
-- Angular soon to come 
+- Angular soon to come
 
 ## MVP
 - User (truck owner) login
